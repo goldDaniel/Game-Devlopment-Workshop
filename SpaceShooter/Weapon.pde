@@ -94,7 +94,7 @@ class MachineLaser extends Weapon
     {
         super(lasers);
 
-        fireRate = 0.2f;
+        fireRate = 0.15f;
         laserSpeed = 1400.f;
         collisionSize = 16;
 

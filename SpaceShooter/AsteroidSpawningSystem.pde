@@ -3,11 +3,14 @@
 */
 class AsteroidSpawningSystem
 {
+    //the images an asteroid can have
+    ArrayList<PImage> asteroidImages;
+
     //the list of all asteroids in the world
     ArrayList<Asteroid> asteroids;
 
     //the time until we have a chance to spawn an asteroid
-    final private float spawnTime = 0.4f;
+    final private float spawnTime = 0.75f;
     //our timer
     private float spawnTimer = spawnTime;
     //the chance of spawning an asteroid 
@@ -16,6 +19,13 @@ class AsteroidSpawningSystem
     AsteroidSpawningSystem(ArrayList<Asteroid> asteroids)
     {
         this.asteroids = asteroids;
+
+        //load all of our asteroid images and add them to our list
+        asteroidImages = new ArrayList();
+        asteroidImages.add(loadImage("assets/asteroid0.png"));
+        asteroidImages.add(loadImage("assets/asteroid1.png"));
+        asteroidImages.add(loadImage("assets/asteroid2.png"));
+        asteroidImages.add(loadImage("assets/asteroid3.png"));
     }
 
     void update(float dt)
@@ -95,7 +105,14 @@ class AsteroidSpawningSystem
             }
         }
 
-        Asteroid asteroid = new Asteroid(x, y, speed, angle);
+        //get a random index to access our iamges
+        int imageIndex = floor(random(0, asteroidImages.size()));
+        
+        //get the image we want the asteroid to appear as
+        PImage image = asteroidImages.get(imageIndex);
+
+        //create the asteroid and add it to our list
+        Asteroid asteroid = new Asteroid(image, x, y, speed, angle);
         asteroids.add(asteroid);
     }
 }

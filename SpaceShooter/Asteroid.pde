@@ -3,6 +3,8 @@
 */
 class Asteroid
 {
+    final PImage image;
+
     //position data
     float x;
     float y;
@@ -18,8 +20,9 @@ class Asteroid
     float drawAngle;
     
 
-    Asteroid(float x, float y, float speed, float angle)
+    Asteroid(PImage image, float x, float y, float speed, float angle)
     {
+        this.image = image;
         this.x = x;
         this.y = y;
         this.speed = speed;
@@ -29,5 +32,13 @@ class Asteroid
         rotationSpeed = 0.2f + PI * random(-0.4f, 0.4f);
 
         size = random(32, 64);
+    }
+
+    void draw()
+    {
+        translate(x, y);
+        rotate(angle + drawAngle);
+        
+        image(image, -size/2, -size/2, size, size);
     }
 }

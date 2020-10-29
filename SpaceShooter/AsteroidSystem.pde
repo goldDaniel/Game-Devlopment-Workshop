@@ -6,16 +6,11 @@ class AsteroidSystem
     //we use this to manage all the information needed to spawn asteroids
     private AsteroidSpawningSystem spawningSystem;
 
-    //the image we use to draw asteroids with
-    private PImage image;
-    
     AsteroidSystem()
     {
         asteroids = new ArrayList();
 
         spawningSystem = new AsteroidSpawningSystem(asteroids);
-
-        image = loadImage("Assets/asteroid.png");
     }
 
     /*
@@ -32,7 +27,8 @@ class AsteroidSystem
         spawningSystem.update(dt);
 
 
-        //similar to lasers, once the asteroid is fully offscreen we want to remove it
+        //once the asteroid is fully offscreen we want to remove it
+        //we store what we want to remove in this list
         ArrayList<Asteroid> toDestroy = new ArrayList();
 
         //moves the asteroids
@@ -67,10 +63,7 @@ class AsteroidSystem
         {
             pushMatrix();
 
-            translate(a.x, a.y);
-            rotate(a.angle + a.drawAngle);
-            
-            image(image, -a.size/2, -a.size/2, a.size, a.size);
+            a.draw();
 
             popMatrix();    
         }

@@ -89,81 +89,9 @@ class PlayerSystem
 
         image(  image, 
                 -player.size / 2,-player.size / 2, 
-                player.size, 
-                player.size);
+                player.size, player.size);
 
         popMatrix();
-
-        //draws a copy of the player around the edges
-        //of the world. This helps with the illusion 
-        //of a wrapping stage
-
-        //WRAPPING FOR NEGATIVE X
-        if(player.x + player.size > width)
-        {
-            pushMatrix();
-            
-            float circleX = player.x - width;
-            translate(circleX, player.y);
-            rotate(player.movementAngle);
-
-            image(  image, 
-                    -player.size / 2, 
-                    -player.size / 2, 
-                    player.size, player.
-                    size);
-
-            popMatrix();
-        }
-        //WRAPPING FOR POSITIVE X
-        if(player.x - player.size < 0)
-        {
-            pushMatrix();
-            
-            float circleX = player.x + width;
-            translate(circleX, player.y);
-            rotate(player.movementAngle);
-
-            image(  image, 
-                    -player.size / 2, 
-                    -player.size / 2, 
-                    player.size, 
-                    player.size);
-
-            popMatrix();
-        }
-        //WRAPPING FOR NEGATIVE Y
-        if(player.y + player.size > height)
-        {
-            pushMatrix();
-
-            float circleY = player.y - height;
-            translate(player.x, circleY);
-            rotate(player.movementAngle);
-             image(  image, 
-                    -player.size / 2, 
-                    -player.size / 2, 
-                    player.size, 
-                    player.size);
-
-            popMatrix();
-        }
-        //WRAPPING FOR POSITIVE Y
-        if(player.y - player.size < 0)
-        {
-            pushMatrix();
-
-            float circleY = player.y + height;
-            translate(player.x, circleY);
-            rotate(player.movementAngle);
-             image(  image, 
-                    -player.size / 2, 
-                    -player.size / 2, 
-                    player.size, 
-                    player.size);
-
-            popMatrix();
-        }
     }
 
 
