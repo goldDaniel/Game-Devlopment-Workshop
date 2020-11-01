@@ -1,3 +1,4 @@
+import processing.sound.*;
 /*
     This class is responsible for updating our game data, and systems
 */
@@ -14,11 +15,17 @@ class Game
     //the image representing our remaining lives
     private PImage lifeImage;
     
+    //the sound we use when firing lasers
+    private SoundFile laserSound;
+
     //used to manage all asteroids in the game
     private AsteroidSystem asteroidSystem;
     
     //used to manage the player
     private PlayerSystem playerSystem;
+
+    //manages all enemy ships 
+    private EnemySystem enemySystem;
     
     //used to manage all the lasers in the game
     private LaserSystem laserSystem;
@@ -44,13 +51,18 @@ class Game
         
         //the player system accepts a weapon as a parameter
         //this way we are able to switch the weapon type
-        playerSystem = new PlayerSystem(new DefaultWeapon(laserSystem.getLasers()));
+        laserSound = loadSound("Assets/playerFire.mp3");
+        Weapon defaultWeapon = new DefaultWeapon(laserSystem.getLasers(), laserSound);
+        playerSystem = new PlayerSystem(defaultWeapon);
+
+        //initializes our enemies system
+        enemySystem = new EnemySystem(playerSystem.getPlayer());
 
         //handles collisions between lasers & asteroids
-        laserCollisions = new LaserCollisionSystem(laserSystem.getLasers(), asteroidSystem.getAsteroids(), stats);
+        laserCollisions = new LaserCollisionSystem(laserSystem.getLasers(), asteroidSystem.getAsteroids(), enemySystem.getEnemies(), stats);
 
         //handles collisions between the player & asteroids
-        playerCollisions = new PlayerCollisionSystem(playerSystem.getPlayer(), asteroidSystem.getAsteroids(), stats);
+        playerCollisions = new PlayerCollisionSystem(playerSystem.getPlayer(), asteroidSystem.getAsteroids(), enemySystem.getEnemies(), stats);
     }
 
     public boolean isGameOver()
@@ -58,6 +70,10 @@ class Game
         return stats.lives == 0;
     }
 
+
+    /*
+        resets the game stats, allowing us to restart
+    */
     public void resetStats()
     {
         stats.lives = 3;
@@ -74,19 +90,19 @@ class Game
         //if we are pushing 1, switch to the default weapon
         if(isKeyDown('1'))
         {
-            Weapon nextWeapon = new DefaultWeapon(laserSystem.getLasers());
+            Weapon nextWeapon = new DefaultWeapon(laserSystem.getLasers(), laserSound);
             playerSystem.setWeapon(nextWeapon);
         }
         //if we are pushing 2, switch to the machine laser weapon
         if(isKeyDown('2'))
         {
-            Weapon nextWeapon = new MachineLaser(laserSystem.getLasers());
+            Weapon nextWeapon = new MachineLaser(laserSystem.getLasers(), laserSound);
             playerSystem.setWeapon(nextWeapon);
         }
         //if we are pushing 3, switch to the shotgun laser weapon
         if(isKeyDown('3'))
         {
-            Weapon nextWeapon = new ShotgunLaser(laserSystem.getLasers());
+            Weapon nextWeapon = new ShotgunLaser(laserSystem.getLasers(), laserSound);
             playerSystem.setWeapon(nextWeapon);
         }
 
@@ -96,6 +112,9 @@ class Game
         
         //updates asteroid info
         asteroidSystem.update(dt);
+
+        //updates enemy info
+        enemySystem.update(dt);
 
         //updates laser info
         laserSystem.update(dt);
@@ -125,6 +144,9 @@ class Game
 
         //draws all asteroids
         asteroidSystem.draw();
+
+        //draws all enemies
+        enemySystem.draw();
 
         //draws all lasers
         laserSystem.draw();

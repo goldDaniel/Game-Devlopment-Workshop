@@ -207,12 +207,17 @@ private void drawMouseCursor()
 boolean isKeyDown(char key)
 {
     char pressed = Character.toLowerCase(key);
-    if(inputMap.containsKey((int)key))
+    if(inputMap.containsKey((int)pressed))
     {
-        return inputMap.get((int)key);
+        return inputMap.get((int)pressed);
     }
 
     return false;
+}
+
+SoundFile loadSound(String filepath)
+{
+    return new SoundFile(this, filepath);
 }
 
 void keyPressed()
@@ -220,6 +225,7 @@ void keyPressed()
     char pressed = Character.toLowerCase(key);
     inputMap.put((int)pressed, true);   
 }
+
 
 void keyReleased()
 {
