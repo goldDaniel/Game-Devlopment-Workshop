@@ -217,10 +217,6 @@ boolean isKeyDown(char key)
     return false;
 }
 
-SoundFile loadSound(String filepath)
-{
-    return new SoundFile(this, filepath);
-}
 
 void keyPressed()
 {

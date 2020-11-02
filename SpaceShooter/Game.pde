@@ -1,4 +1,3 @@
-import processing.sound.*;
 /*
     This class is responsible for updating our game data, and systems
 */
@@ -14,9 +13,6 @@ class Game
   
     //the image representing our remaining lives
     private PImage lifeImage;
-    
-    //the sound we use when firing lasers
-    private SoundFile laserSound;
 
     //used to manage all asteroids in the game
     private AsteroidSystem asteroidSystem;
@@ -51,8 +47,7 @@ class Game
         
         //the player system accepts a weapon as a parameter
         //this way we are able to switch the weapon type
-        laserSound = loadSound("Assets/playerFire.mp3");
-        Weapon defaultWeapon = new DefaultWeapon(laserSystem.getLasers(), laserSound);
+        Weapon defaultWeapon = new DefaultWeapon(laserSystem.getLasers());
         playerSystem = new PlayerSystem(defaultWeapon);
 
         //initializes our enemies system
@@ -90,19 +85,19 @@ class Game
         //if we are pushing 1, switch to the default weapon
         if(isKeyDown('1'))
         {
-            Weapon nextWeapon = new DefaultWeapon(laserSystem.getLasers(), laserSound);
+            Weapon nextWeapon = new DefaultWeapon(laserSystem.getLasers());
             playerSystem.setWeapon(nextWeapon);
         }
         //if we are pushing 2, switch to the machine laser weapon
         if(isKeyDown('2'))
         {
-            Weapon nextWeapon = new MachineLaser(laserSystem.getLasers(), laserSound);
+            Weapon nextWeapon = new MachineLaser(laserSystem.getLasers());
             playerSystem.setWeapon(nextWeapon);
         }
         //if we are pushing 3, switch to the shotgun laser weapon
         if(isKeyDown('3'))
         {
-            Weapon nextWeapon = new ShotgunLaser(laserSystem.getLasers(), laserSound);
+            Weapon nextWeapon = new ShotgunLaser(laserSystem.getLasers());
             playerSystem.setWeapon(nextWeapon);
         }
 

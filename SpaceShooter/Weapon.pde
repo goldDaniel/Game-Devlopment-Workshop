@@ -1,8 +1,6 @@
 abstract class Weapon
 {
 
-    SoundFile laserSound;
-
     ArrayList<Laser> lasers; 
 
     //values used to control player shooting
@@ -13,10 +11,9 @@ abstract class Weapon
     float laserSpeed;
     float collisionSize;
 
-    public Weapon(ArrayList<Laser> lasers, SoundFile laserSound)
+    public Weapon(ArrayList<Laser> lasers)
     {
         this.lasers = lasers;
-        this.laserSound = laserSound;
     }
 
     final float getCooldownPercent()
@@ -42,9 +39,9 @@ class DefaultWeapon extends Weapon
 {
 
     //here we will set the parameters for the weapon
-    public DefaultWeapon(ArrayList<Laser> lasers, SoundFile laserSound)
+    public DefaultWeapon(ArrayList<Laser> lasers)
     {
-        super(lasers, laserSound);
+        super(lasers);
 
         fireRate = 0.4f;
         laserSpeed = 1200.f;
@@ -60,7 +57,6 @@ class DefaultWeapon extends Weapon
         {
             fireTimer = fireRate;            
 
-            laserSound.play();
 
             //we need the angle tangent to the angle we are shooting at
             //using this angle, we can offset the lasers such that they are parallel            
@@ -96,9 +92,9 @@ class DefaultWeapon extends Weapon
 */
 class MachineLaser extends Weapon
 {
-    MachineLaser(ArrayList<Laser> lasers, SoundFile laserSound)
+    MachineLaser(ArrayList<Laser> lasers)
     {
-        super(lasers, laserSound);
+        super(lasers);
 
         fireRate = 0.15f;
         laserSpeed = 1400.f;
@@ -113,8 +109,6 @@ class MachineLaser extends Weapon
         if(fireTimer <= 0)
         {
             fireTimer = fireRate;            
-
-            laserSound.play();
 
             //set the laser spawn position
             float laserX = x + cos(angle) * offset / 2;
@@ -137,9 +131,9 @@ class MachineLaser extends Weapon
 */
 class ShotgunLaser extends Weapon
 {
-    ShotgunLaser(ArrayList<Laser> lasers, SoundFile laserSound)
+    ShotgunLaser(ArrayList<Laser> lasers)
     {
-        super(lasers, laserSound);
+        super(lasers);
 
         fireRate = 1.f;
         laserSpeed = 1400.f;
@@ -154,8 +148,6 @@ class ShotgunLaser extends Weapon
         if(fireTimer <= 0)
         {
             fireTimer = fireRate;            
-
-            laserSound.play();
 
             //set the laser spawn position
             float laserX = x + cos(angle) * offset / 2;
