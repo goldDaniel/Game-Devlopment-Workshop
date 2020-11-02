@@ -33,12 +33,4 @@ class Asteroid
 
         size = random(32, 64);
     }
-
-    void draw()
-    {
-        translate(x, y);
-        rotate(angle + drawAngle);
-        
-        image(image, -size/2, -size/2, size, size);
-    }
 }

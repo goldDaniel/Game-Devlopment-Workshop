@@ -59,11 +59,15 @@ class AsteroidSystem
     */
     void draw()
     {
-        for(Asteroid a : asteroids)
+        for(Asteroid asteroid : asteroids)
         {
-            pushMatrix();
-
-            a.draw();
+            pushMatrix();  
+            
+            translate(asteroid.x, asteroid.y);
+            rotate(asteroid.drawAngle);
+          
+            image(asteroid.image, -asteroid.size/2, -asteroid.size/2, asteroid.size, asteroid.size);
+            
 
             popMatrix();    
         }

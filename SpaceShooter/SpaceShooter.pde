@@ -49,15 +49,16 @@ void setup()
     //set the time in milliseconds
     previousTimeMillis = millis();    
     
-    //create our game
-    game = new Game();
-
+    
     //creates the background image and sets the size to match the screen
     background = loadImage("Assets/spaceBackground.png");
     background.resize(width, height);
 
     //the image for our aiming cursor
     reticle = loadImage("Assets/reticle.png");
+    
+    //create our game
+    game = new Game();
 }
 
 //processing will call this method approximately 60 times per second
@@ -70,6 +71,7 @@ void draw()
     float deltaTime = currentTimeMillis - previousTimeMillis;
     //we divide by 1000 to convert the units from "milliseconds" to "seconds"
     deltaTime /= 1000.0;
+    //the previous time next frame will be the current time this frame
     previousTimeMillis = currentTimeMillis;
 
 
@@ -136,7 +138,7 @@ void mainMenu()
     if(mouseX > btnX && mouseX < btnX + btnWidth &&
        mouseY > btnY && mouseY < btnY + btnHeight)
     {
-        //if we are pressing the left-mouse button while inside the 
+        //if we are pressing the left-mouse button while inside the
         //box around the text, then we start the game
         if(mousePressed)
         {
